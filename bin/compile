@@ -15,7 +15,7 @@ fi
 
 mkdir -p "$GRAVITEE_DOWNLOADS"
 
-echo -n "-----> Downloading Gravitee from $GRAVITEE_URL to $GRAVITEE_ZIP..."
+echo -n "-----> Downloading Graviteeio $GRAVITEE_VERSION from $GRAVITEE_URL to $GRAVITEE_ZIP..."
 curl -s --retry 3 -o "$GRAVITEE_ZIP" -L "$GRAVITEE_URL"
 echo "done"
 
