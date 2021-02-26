@@ -7,8 +7,8 @@ GRAVITEE_DOWNLOADS="$1/downloads"
 GRAVITEE_ZIP="$GRAVITEE_DOWNLOADS/graviteeio-full-$GRAVITEE_VERSION.zip"
 GRAVITEE_URL="https://download.gravitee.io/graviteeio-apim/distributions/graviteeio-full-$GRAVITEE_VERSION.zip"
 
-GRAVITEE_MODULE_TO_DEPLOY=${GRAVITEE_MODULE_TO_DEPLOY:-}
-if [[ -z "${GRAVITEE_MODULE_TO_DEPLOY}" ]]; then
+GRAVITEE_MODULE=${GRAVITEE_MODULE:-}
+if [[ -z "${GRAVITEE_MODULE}" ]]; then
   echo -n "-----> Veuillez saisir le module Gravitee à déployer en définissant la variable d'env GRAVITEE_MODULE... "
   exit 1
 fi
@@ -24,7 +24,7 @@ unzip -q "$GRAVITEE_ZIP" -d "$GRAVITEE_DOWNLOADS"
 echo "done"
 
 echo -n "-----> Init gravitee gateway folders..."
-mv "$GRAVITEE_DOWNLOADS/graviteeio-full-$GRAVITEE_VERSION/$GRAVITEE_MODULE_TO_DEPLOY-$GRAVITEE_VERSION"/* "$1"
+mv "$GRAVITEE_DOWNLOADS/graviteeio-full-$GRAVITEE_VERSION/$GRAVITEE_MODULE-$GRAVITEE_VERSION"/* "$1"
 echo "done"
 
 echo -n "-----> Deleting downloads directory..."
