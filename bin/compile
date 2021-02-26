@@ -7,11 +7,10 @@ GRAVITEE_DOWNLOADS="$1/downloads"
 GRAVITEE_ZIP="$GRAVITEE_DOWNLOADS/graviteeio-full-$GRAVITEE_VERSION.zip"
 GRAVITEE_URL="https://download.gravitee.io/graviteeio-apim/distributions/graviteeio-full-$GRAVITEE_VERSION.zip"
 
-if [[ -n "$GRAVITEE_MODULE_TO_DEPLOY" ]]; then
-GRAVITEE_MODULE_TO_DEPLOY=${GRAVITEE_MODULE_TO_DEPLOY}
-else
-echo -n "-----> Veuillez saisir le module Gravitee à déployer en définissant la variable d'env GRAVITEE_MODULE_TO_DEPLOY... "
-exit 1
+GRAVITEE_MODULE_TO_DEPLOY=${GRAVITEE_MODULE_TO_DEPLOY:-}
+if [[ -z "${GRAVITEE_MODULE_TO_DEPLOY}" ]]; then
+  echo -n "-----> Veuillez saisir le module Gravitee à déployer en définissant la variable d'env GRAVITEE_MODULE... "
+  exit 1
 fi
 
 mkdir -p "$GRAVITEE_DOWNLOADS"
