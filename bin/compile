@@ -2,10 +2,7 @@
 
 set -eu
 
-GRAVITEE_VERSION=$(cat ./bin/version)
-GRAVITEE_DOWNLOADS="$1/downloads"
-GRAVITEE_ZIP="$GRAVITEE_DOWNLOADS/graviteeio-full-$GRAVITEE_VERSION.zip"
-GRAVITEE_URL="https://download.gravitee.io/graviteeio-apim/distributions/graviteeio-full-$GRAVITEE_VERSION.zip"
+PORTAL="graviteeio-portal-ui"
 
 GRAVITEE_MODULE=${GRAVITEE_MODULE:-}
 if [[ -z "${GRAVITEE_MODULE}" ]]; then
@@ -13,19 +10,38 @@ if [[ -z "${GRAVITEE_MODULE}" ]]; then
   exit 1
 fi
 
-mkdir -p "$GRAVITEE_DOWNLOADS"
+FOLDER=${1:-}
+if [[ -z "${FOLDER}" ]]; then
+  echo -n "-----> Veuillez spécifier un répertoire i.e. '.' "
+  exit 1
+fi
 
-echo -n "-----> Downloading Graviteeio $GRAVITEE_VERSION from $GRAVITEE_URL to $GRAVITEE_ZIP..."
-curl -s --retry 3 -o "$GRAVITEE_ZIP" -L "$GRAVITEE_URL"
-echo "done"
+GRAVITEE_VERSION=$(cat ./bin/version)
+GRAVITEE_DOWNLOADS="$FOLDER/downloads"
+GRAVITEE_ZIP="$GRAVITEE_DOWNLOADS/graviteeio-full-$GRAVITEE_VERSION.zip"
+GRAVITEE_URL="https://download.gravitee.io/graviteeio-apim/distributions/graviteeio-full-$GRAVITEE_VERSION.zip"
 
-echo -n "-----> Extracting ZIP...  $GRAVITEE_ZIP  to $GRAVITEE_DOWNLOADS..."
-unzip -q "$GRAVITEE_ZIP" -d "$GRAVITEE_DOWNLOADS"
-echo "done"
 
-echo -n "-----> Init gravitee folders..."
-mv "$GRAVITEE_DOWNLOADS/graviteeio-full-$GRAVITEE_VERSION/$GRAVITEE_MODULE-$GRAVITEE_VERSION"/* "$1"
-echo "done"
+#mkdir -p "$GRAVITEE_DOWNLOADS"
+#
+#echo -n "-----> Downloading Graviteeio $GRAVITEE_VERSION from $GRAVITEE_URL to $GRAVITEE_ZIP..."
+#curl -s --retry 3 -o "$GRAVITEE_ZIP" -L "$GRAVITEE_URL"
+#echo "done"
+#
+#echo -n "-----> Extracting ZIP...  $GRAVITEE_ZIP  to $GRAVITEE_DOWNLOADS..."
+#unzip -q "$GRAVITEE_ZIP" -d "$GRAVITEE_DOWNLOADS"
+#echo "done"
+#
+#echo -n "-----> Init gravitee folders..."
+#mv "$GRAVITEE_DOWNLOADS/graviteeio-full-$GRAVITEE_VERSION/$GRAVITEE_MODULE-$GRAVITEE_VERSION"/* "$1"
+#echo "done"
+
+if [ "${GRAVITEE_MODULE}" = $PORTAL ]; then
+  echo -n "-----> Run config for portal "
+  exit 1
+fi
+
+
 
 echo -n "-----> Deleting downloads directory..."
 rm -rf "$GRAVITEE_DOWNLOADS"
