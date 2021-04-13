@@ -23,10 +23,10 @@ echo -n "-----> Extracting ZIP...  $GRAVITEE_ZIP  to $GRAVITEE_DOWNLOADS..."
 unzip -q "$GRAVITEE_ZIP" -d "$GRAVITEE_DOWNLOADS"
 echo "done"
 
-echo -n "-----> Init gravitee gateway folders..."
+echo -n "-----> Init gravitee folders..."
 mv "$GRAVITEE_DOWNLOADS/graviteeio-full-$GRAVITEE_VERSION/$GRAVITEE_MODULE-$GRAVITEE_VERSION"/* "$1"
 echo "done"
 
 echo -n "-----> Deleting downloads directory..."
 rm -rf "$GRAVITEE_DOWNLOADS"
-echo "done"
+echo "[gravitee-buildpack] done"
