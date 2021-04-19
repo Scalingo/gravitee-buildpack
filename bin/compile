@@ -48,11 +48,10 @@ echo -n "-----> Init gravitee folders..."
 mv "$GRAVITEE_DOWNLOADS/graviteeio-full-$GRAVITEE_VERSION/$GRAVITEE_MODULE-$GRAVITEE_VERSION"/* "$1"
 echo "done"
 
-if [ "${GRAVITEE_MODULE}" = $PORTAL ]; then
-  echo -n "-----> Run config for ${GRAVITEE_MODULE} module"
-  ./gravitee/${GRAVITEE_MODULE}/bin/setup-config.sh $1
-  echo -n "-----> Config done for ${GRAVITEE_MODULE}"
-fi
+echo -n "-----> Run config for ${GRAVITEE_MODULE} module"
+./gravitee/${GRAVITEE_MODULE}/bin/setup-config.sh $1
+echo -n "-----> Config done for ${GRAVITEE_MODULE}"
+
 
 echo -n "-----> Deleting downloads directory..."
 rm -rf "$GRAVITEE_DOWNLOADS"
