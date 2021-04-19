@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -xeu
+set -eu
 
 GRAVITEE_MODULE=${GRAVITEE_MODULE:-}
 PORTAL="graviteeio-portal-ui"
