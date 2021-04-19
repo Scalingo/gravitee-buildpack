@@ -1,5 +1,5 @@
 {
-  "baseURL": "https://management-api.pix.fr/portal/environments/DEFAULT",
+  "baseURL": "MANAGEMENT_API_URL/portal/environments/DEFAULT",
   "loaderURL": "assets/images/gravitee-loader.gif",
   "pagination": {
     "size": {
