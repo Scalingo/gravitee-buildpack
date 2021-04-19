@@ -2,13 +2,25 @@
 
 set -xeu
 
+GRAVITEE_MODULE=${GRAVITEE_MODULE:-}
 PORTAL="graviteeio-portal-ui"
+ADMIN="graviteeio-management-ui"
+GATEWAY="graviteeio-gateway"
+API="graviteeio-rest-api"
+
 
 GRAVITEE_MODULE=${GRAVITEE_MODULE:-}
 if [[ -z "${GRAVITEE_MODULE}" ]]; then
   echo -n "-----> Veuillez saisir le module Gravitee à déployer en définissant la variable d'env GRAVITEE_MODULE... "
   exit 1
 fi
+
+MODULES=(" ${PORTAL} ${ADMIN} ${GATEWAY} ${API} ")
+if [[ ! " ${MODULES[*]} " =~ " ${GRAVITEE_MODULE} " ]]; then
+  echo -n "-----> Veuillez saisir un des moduled Gravitee ${MODULES}"
+  exit 1
+fi
+
 
 FOLDER=${1:-}
 if [[ -z "${FOLDER}" ]]; then
