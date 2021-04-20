@@ -49,7 +49,7 @@ mv "$GRAVITEE_DOWNLOADS/graviteeio-full-$GRAVITEE_VERSION/$GRAVITEE_MODULE-$GRAV
 echo "done"
 
 echo -n "-----> Run config for ${GRAVITEE_MODULE} module"
-./gravitee/${GRAVITEE_MODULE}/bin/setup-config.sh $1
+"./gravitee/${GRAVITEE_MODULE}/setup-config.sh" "$1"
 echo -n "-----> Config done for ${GRAVITEE_MODULE}"
 
 
