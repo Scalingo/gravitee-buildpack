@@ -9,7 +9,7 @@ if [[ -z "${DIST_FOLDER}" ]]; then
 fi
 
 echo -n "-----> Copying buildpack gravitee gateway configuration ... "
-CONFIG_FILE=gravitee/graviteeio-rest-api/pix-config
+CONFIG_FILE=gravitee/graviteeio-gateway/pix-config
 
 mv ${CONFIG_FILE}/gravitee.yml ${DIST_FOLDER}/config/gravitee.yml
 mv ${CONFIG_FILE}/logback.xml ${DIST_FOLDER}/config/logback.xml
