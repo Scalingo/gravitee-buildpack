@@ -221,7 +221,7 @@ security:
           username: pix-admin # needs to exists to be overriden after
           password:
           roles: DEFAULT
-#    - type: gravitee
+    - type: gravitee
 ## SMTP configuration used to send mails
 email:
   enabled: false
