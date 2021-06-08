@@ -43,14 +43,14 @@ jetty:
 http:
   api:
     # Configure the listening path for the API. Default to /
-    #    entrypoint: /
+    entrypoint: /
     # Configure Management API and Portal API.
     #    management:
     #      enabled: true
     #      entrypoint: ${http.api.entrypoint}management
-    #    portal:
-    #      enabled: true
-    #      entrypoint: ${http.api.entrypoint}portal
+    portal:
+      enabled: false
+      entrypoint: <%= ENV["GRAVITEE_PORTAL_URL"] %>
   cors:
     # Allows to configure the header Access-Control-Allow-Origin (default value: *)
     # '*' is a valid value but is considered as a security risk as it will be opened to cross origin requests from anywhere.
@@ -118,7 +118,7 @@ http:
 management:
   type: mongodb
   mongodb:
-    uri: DEFAULT
+    uri: <%= @mongo_url %>
 
 # Management repository: clustered MongoDB
 #management:
@@ -170,10 +170,10 @@ analytics:
   type: elasticsearch
   elasticsearch:
     endpoints:
-      - DEFAULT
+      - <%= "#{@elasticsearch_url.scheme}://#{@elasticsearch_url.host}:#{@elasticsearch_url.port}" %>
     security:
-      username: DEFAULT
-      password: DEFAULT
+      username: <%= @elasticsearch_url.user %>
+      password: <%= @elasticsearch_url.password %>
 #    index: gravitee
 #    index_per_type: true
 #    cross_cluster:
@@ -218,23 +218,27 @@ security:
       password-encoding-algo: bcrypt
       users:
         - user:
-          username: pix-admin # needs to exists to be overriden after
-          password:
-          roles: DEFAULT
+          username: <%= ENV["GRAVITEE_ADMIN_USERNAME"] %>
+          password: <%= ENV["GRAVITEE_ADMIN_PASSWORD"] %>
+          roles: ORGANIZATION:ADMIN,ENVIRONMENT:ADMIN
     - type: gravitee
 ## SMTP configuration used to send mails
 email:
-  enabled: false
-  host: smtp.my.domain
-  subject: "[Gravitee.io] %s"
-  port: 587
-  from: noreply@my.domain
-  username: user@my.domain
-  password: password
+<% if @mail_url %>
+  enabled: true
+  host: <%= @mail_url.host %>
+  subject: <%= ENV["MAIL_SUBJECT_FORMAT"] %>
+  port: <%= @mail_url.port %>
+  from: <%= ENV["MAIL_SENDER_FROM"] %>
+  username: <%= @mail_url.user %>
+  password: <%= @mail_url.password %>
   properties:
     auth: true
-    starttls.enable: true
-    ssl.trust: DEFAULT
+    starttls.enable: <%= @mail_url.port == 587 %>
+    ssl.trust: true
+<% else %>
+  enabled: false
+<% end %>
 
 # Mail templates
 #templates:
@@ -267,7 +271,7 @@ ds:
     port: 9200
 
 jwt:
-  secret: default-secret
+  secret: <%= ENV["GRAVITEE_JWT_SECRET"] %>
   # Allows to define the end of validity of the token in seconds (default 604800 = a week)
   #expire-after: 604800
   # Allows to define the end of validity of the token in seconds for email registration (default 86400 = a day)
