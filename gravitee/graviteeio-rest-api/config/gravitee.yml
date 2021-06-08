@@ -252,7 +252,7 @@ email:
 
 theme:
   name: default
-  logo: themes/assets/pix-logo.png
+  logo: themes/assets/ui-logo.png
   loader: assets/gravitee_logo_anim.gif
   css: themes/theme.css
 

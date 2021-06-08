@@ -1,0 +1,7 @@
+index index.html;
+
+root <%= File.join ENV["HOME"], ENV["GRAVITEE_MODULE"] %>;
+
+location / {
+    try_files $uri $uri/ /index.html;
+}

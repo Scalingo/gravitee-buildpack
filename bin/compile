@@ -1,58 +1,88 @@
 #!/bin/bash
 
+if [ "$DEBUG_BUILDPACK" = "true" ] ; then
+  set -x
+fi
+
 set -eu
 
+BUILD_DIR="$1"
+CACHE_DIR="$2"
+ENV_DIR="$3"
+BP_DIR=$(cd "$(dirname $0)/.." && pwd)
+
+source "${BP_DIR}/lib/output.sh"
+source "${BP_DIR}/lib/nginx.sh"
+source "${BP_DIR}/lib/java.sh"
+
+# Configuration from the environment
+GRAVITEE_VERSION="${GRAVITEE_VERSION:-3.8.3}"
 GRAVITEE_MODULE=${GRAVITEE_MODULE:-}
+
 PORTAL="graviteeio-portal-ui"
 ADMIN="graviteeio-management-ui"
 GATEWAY="graviteeio-gateway"
 API="graviteeio-rest-api"
-
-
-GRAVITEE_MODULE=${GRAVITEE_MODULE:-}
-if [[ -z "${GRAVITEE_MODULE}" ]]; then
-  echo -n "-----> Veuillez saisir le module Gravitee à déployer en définissant la variable d'env GRAVITEE_MODULE... "
-  exit 1
-fi
-
 MODULES=(" ${PORTAL} ${ADMIN} ${GATEWAY} ${API} ")
+if [[ -z "$GRAVITEE_MODULE" ]]; then
+  error "Please choose the Gravitee module to deploy with the env var GRAVITEE_MODULE… (Choose among ${MODULES})"
+  exit 1
+fi
+
 if [[ ! " ${MODULES[*]} " =~ " ${GRAVITEE_MODULE} " ]]; then
-  echo -n "-----> Veuillez saisir un des moduled Gravitee ${MODULES}"
+  error "Veuillez saisir un des moduled Gravitee ${MODULES}"
   exit 1
 fi
 
-
-FOLDER=${1:-}
-if [[ -z "${FOLDER}" ]]; then
-  echo -n "-----> Veuillez spécifier un répertoire i.e. '.' "
-  exit 1
-fi
-
-GRAVITEE_VERSION=$(cat ./bin/version)
-GRAVITEE_DOWNLOADS="$FOLDER/downloads"
-GRAVITEE_ZIP="$GRAVITEE_DOWNLOADS/graviteeio-full-$GRAVITEE_VERSION.zip"
-GRAVITEE_URL="https://download.gravitee.io/graviteeio-apim/distributions/graviteeio-full-$GRAVITEE_VERSION.zip"
-
+GRAVITEE_DOWNLOADS="${CACHE_DIR}/downloads"
+GRAVITEE_ZIP="${GRAVITEE_DOWNLOADS}/graviteeio-full-${GRAVITEE_VERSION}.zip"
+GRAVITEE_URL="https://download.gravitee.io/graviteeio-apim/distributions/graviteeio-full-${GRAVITEE_VERSION}.zip"
 
 mkdir -p "$GRAVITEE_DOWNLOADS"
 
-echo -n "-----> Downloading Graviteeio $GRAVITEE_VERSION from $GRAVITEE_URL to $GRAVITEE_ZIP..."
-curl -s --retry 3 -o "$GRAVITEE_ZIP" -L "$GRAVITEE_URL"
-echo "done"
+status "Downloading Graviteeio ${GRAVITEE_VERSION} from ${GRAVITEE_URL} to ${GRAVITEE_ZIP}…"
+if [ -f "$GRAVITEE_ZIP" ] ; then
+  info "Graviteeio archive fetched from the deployment cache"
+else
+  curl -s --retry 3 -o "$GRAVITEE_ZIP" -L "$GRAVITEE_URL"
+fi
+info "done"
 
-echo -n "-----> Extracting ZIP...  $GRAVITEE_ZIP  to $GRAVITEE_DOWNLOADS..."
-unzip -q "$GRAVITEE_ZIP" -d "$GRAVITEE_DOWNLOADS"
-echo "done"
+status "Extracting ZIP ${GRAVITEE_ZIP} to ${GRAVITEE_DOWNLOADS}…"
+unzip -u -q "$GRAVITEE_ZIP" -d "$GRAVITEE_DOWNLOADS"
+info "done"
 
-echo -n "-----> Init gravitee folders..."
-mv "$GRAVITEE_DOWNLOADS/graviteeio-full-$GRAVITEE_VERSION/$GRAVITEE_MODULE-$GRAVITEE_VERSION"/* "$1"
-echo "done"
+status "Init gravitee folders…"
+mv "${GRAVITEE_DOWNLOADS}/graviteeio-full-${GRAVITEE_VERSION}/${GRAVITEE_MODULE}-${GRAVITEE_VERSION}" "${BUILD_DIR}/${GRAVITEE_MODULE}"
+info "done"
 
-echo -n "-----> Run config for ${GRAVITEE_MODULE} module"
-"./gravitee/${GRAVITEE_MODULE}/setup-config.sh" "$1"
-echo -n "-----> Config done for ${GRAVITEE_MODULE}"
+cp -r "${BP_DIR}/gravitee/${GRAVITEE_MODULE}/scripts" "${BUILD_DIR}/scripts"
 
+status "Setting up default configuration"
+mkdir -p "${BUILD_DIR}/config"
+# If the user is deploying their own config files in the 'config' directory
+# do not override with defaults from buildpack
+for config_file in ${BP_DIR}/gravitee/${GRAVITEE_MODULE}/config/* ; do
+  config_basename="$(basename $config_file)"
+  if [ -f "${BUILD_DIR}/config/${config_basename}" ] ; then
+    info "Do not override user provided config/${config_basename} file"
+  else
+    info "Copying config/${config_basename} from buildpack defaults"
+    cp "$config_file" "${BUILD_DIR}/config"
+  fi
+done
 
-echo -n "-----> Deleting downloads directory..."
-rm -rf "$GRAVITEE_DOWNLOADS"
-echo "[gravitee-buildpack] done"
+info "done"
+
+if [ "$GRAVITEE_MODULE" = "graviteeio-rest-api" -o "$GRAVITEE_MODULE" = "graviteeio-gateway" ] ; then
+  install_jdk "$BUILD_DIR"
+fi
+
+if [ "$GRAVITEE_MODULE" = "graviteeio-portal-ui" -o "$GRAVITEE_MODULE" = "graviteeio-management-ui" ] ; then
+  install_nginx "$BUILD_DIR" "$CACHE_DIR" "$ENV_DIR"
+  if [ ! -f "${BUILD_DIR}/nginx.conf.erb" ] ; then
+    cp "${BP_DIR}/gravitee/${GRAVITEE_MODULE}/nginx/nginx.conf.erb" "${BUILD_DIR}"
+  fi
+fi
+
+info "Gravitee module ${GRAVITEE_MODULE} installation is done"
