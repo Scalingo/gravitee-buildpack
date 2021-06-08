@@ -75,7 +75,8 @@ done
 info "done"
 
 if [ "$GRAVITEE_MODULE" = "graviteeio-rest-api" -o "$GRAVITEE_MODULE" = "graviteeio-gateway" ] ; then
-  install_jdk "$BUILD_DIR"
+  echo "java.runtime.version=11" > "${BUILD_DIR}/system.properties"
+  install_jdk "$BUILD_DIR" "$CACHE_DIR"
 fi
 
 if [ "$GRAVITEE_MODULE" = "graviteeio-portal-ui" -o "$GRAVITEE_MODULE" = "graviteeio-management-ui" ] ; then
