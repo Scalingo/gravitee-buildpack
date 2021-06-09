@@ -48,9 +48,9 @@ http:
     #    management:
     #      enabled: true
     #      entrypoint: ${http.api.entrypoint}management
-    portal:
-      enabled: false
-      entrypoint: <%= ENV["GRAVITEE_PORTAL_URL"] %>
+    #    portal:
+    #      enabled: true
+    #      entrypoint: ${http.api.entrypoint}portal
   cors:
     # Allows to configure the header Access-Control-Allow-Origin (default value: *)
     # '*' is a valid value but is considered as a security risk as it will be opened to cross origin requests from anywhere.
@@ -250,7 +250,8 @@ email:
 #    path: ${gravitee.home}/dashboards
 
 # Portal themes
-#portal:
+portal:
+  entrypoint: <%= ENV["GRAVITEE_PORTAL_URL"] %>
 #  themes:
 #    path: ${gravitee.home}/themes
 
