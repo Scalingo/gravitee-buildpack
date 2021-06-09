@@ -235,7 +235,7 @@ email:
   properties:
     auth: true
     starttls.enable: <%= @mail_url.port == 587 %>
-    ssl.trust: true
+    ssl.trust: <%= @mail_url.host %>
 <% else %>
   enabled: false
 <% end %>
