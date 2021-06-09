@@ -71,8 +71,11 @@ for config_file in ${BP_DIR}/gravitee/${GRAVITEE_MODULE}/config/* ; do
     cp "$config_file" "${BUILD_DIR}/config"
   fi
 done
-
 info "done"
+
+if [ "$GRAVITEE_MODULE" = "graviteeio-rest-api" ] ; then
+  gem install  --user-install 'bcrypt'
+fi
 
 if [ "$GRAVITEE_MODULE" = "graviteeio-rest-api" -o "$GRAVITEE_MODULE" = "graviteeio-gateway" ] ; then
   echo "java.runtime.version=11" > "${BUILD_DIR}/system.properties"

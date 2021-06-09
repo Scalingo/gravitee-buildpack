@@ -219,7 +219,7 @@ security:
       users:
         - user:
           username: <%= ENV["GRAVITEE_ADMIN_USERNAME"] %>
-          password: <%= ENV["GRAVITEE_ADMIN_PASSWORD"] %>
+          password: <%= @admin_password %>
           roles: ORGANIZATION:ADMIN,ENVIRONMENT:ADMIN
     - type: gravitee
 ## SMTP configuration used to send mails

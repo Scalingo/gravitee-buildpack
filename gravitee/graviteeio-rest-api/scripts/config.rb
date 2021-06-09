@@ -2,6 +2,7 @@
 
 require 'uri'
 require 'erb'
+require 'bcrypt'
 
 install_dir="#{ENV["HOME"]}/#{ENV["GRAVITEE_MODULE"]}"
 config_dir="#{ENV["HOME"]}/config"
@@ -18,6 +19,7 @@ end
 
 @elasticsearch_url = URI(ENV["ELASTICSEARCH_URL"])
 @mongo_url = ENV["MONGO_URL"]
+@admin_password = BCrypt::Password.create(ENV["GRAVITEE_ADMIN_PASSWORD"])
 
 # Optional configuration to send emails
 @mail_url = URI(ENV["MAIL_URL"]) if ENV["MAIL_URL"]
