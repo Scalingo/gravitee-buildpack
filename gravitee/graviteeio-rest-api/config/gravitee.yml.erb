@@ -227,9 +227,9 @@ email:
 <% if @mail_url %>
   enabled: true
   host: <%= @mail_url.host %>
-  subject: <%= ENV["MAIL_SUBJECT_FORMAT"] %>
+  subject: '<%= ENV["MAIL_SUBJECT_FORMAT"] %>'
   port: <%= @mail_url.port %>
-  from: <%= ENV["MAIL_SENDER_FROM"] %>
+  from: '<%= ENV["MAIL_SENDER_FROM"] %>'
   username: <%= @mail_url.user %>
   password: <%= @mail_url.password %>
   properties:
