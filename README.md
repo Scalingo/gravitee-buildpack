@@ -101,6 +101,7 @@ Common to all modules:
 **Optional:**
 
 * `JVM_COMMON_BUILDPACK`: (optional) by default `https://buildpacks-repository.s3.eu-central-1.amazonaws.com/jvm-common.tar.xz`
+* `GRAVITEE_HEARTBEAT_ENABLED`: (optional) by default `false`, configure wether or not the gateway should report its status to the REST API
 
 ### graviteeio-portal-ui
 
