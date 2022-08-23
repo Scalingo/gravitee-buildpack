@@ -20,6 +20,9 @@ end
 @elasticsearch_url = URI(ENV["ELASTICSEARCH_URL"])
 @mongo_url = ENV["MONGO_URL"]
 
+# Optional configuration to enable gateway heartbeat
+@heartbeat_enabled = ENV.fetch("GRAVITEE_HEARTBEAT_ENABLED", "false") == "true"
+
 gravitee_config_template = "#{config_dir}/gravitee.yml.erb"
 gravitee_config_install = "#{install_dir}/config/gravitee.yml"
 if File.exists? gravitee_config_template

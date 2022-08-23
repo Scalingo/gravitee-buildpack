@@ -248,10 +248,14 @@ services:
 
 # heartbeat
   heartbeat:
-    enabled: false
+<% if @heartbeat_enabled %>
+    enabled: true
 #    delay: 5000
 #    unit: MILLISECONDS
 #    storeSystemProperties: true
+<% else %>
+    enabled: false
+<% end %>
 
 #handlers:
 #  request:
