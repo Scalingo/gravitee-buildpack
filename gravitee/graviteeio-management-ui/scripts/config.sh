@@ -9,6 +9,6 @@ sed "s#MANAGEMENT_API_URL#${MANAGEMENT_API_URL}#" "${CONFIG_DIR}/${CONSTANTS_FIL
 
 if [ -d "$CONFIG_DIR/themes" ] ; then
   echo "-----> Copying theme assets…"
-  cp -r "${CONFIG_DIR}/themes" "${INSTALL_DIR}/themes"
+  cp -r "${CONFIG_DIR}"/themes/* "${INSTALL_DIR}/themes/"
 fi
 
