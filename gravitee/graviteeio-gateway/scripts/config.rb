@@ -2,6 +2,7 @@
 #
 require 'uri'
 require 'erb'
+require 'fileutils'
 
 install_dir="#{ENV["HOME"]}/#{ENV["GRAVITEE_MODULE"]}"
 config_dir="#{ENV["HOME"]}/config"
