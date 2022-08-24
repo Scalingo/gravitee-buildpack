@@ -5,7 +5,9 @@ CONFIG_DIR=${HOME}/config
 
 CONSTANTS_FILE=constants.json
 
-sed "s#MANAGEMENT_API_URL#${MANAGEMENT_API_URL}#" "${CONFIG_DIR}/${CONSTANTS_FILE}" > ${INSTALL_DIR}/${CONSTANTS_FILE}
+API_URL="${API_URL:-$MANAGEMENT_API_URL}"
+
+sed "s#API_URL#${API_URL}#" "${CONFIG_DIR}/${CONSTANTS_FILE}" > ${INSTALL_DIR}/${CONSTANTS_FILE}
 
 if [ -d "$CONFIG_DIR/themes" ] ; then
   echo "-----> Copying theme assets…"
