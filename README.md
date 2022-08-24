@@ -106,7 +106,7 @@ Common to all modules:
 
 **Required:**
 
-* `MANAGEMENT_API_URL`: URL to the REST API application, example: `https://my-gravitee-rest-api.osc-fr1.scalingo.io`
+* `API_URL`: URL to the REST API application, example: `https://my-gravitee-rest-api.osc-fr1.scalingo.io` (old name: `MANAGEMENT_API_URL`)
 
 **Optional:**
 
@@ -116,7 +116,7 @@ Common to all modules:
 
 **Required:**
 
-* `MANAGEMENT_API_URL`: URL to the REST API application, example: `https://my-gravitee-rest-api.osc-fr1.scalingo.io`
+* `API_URL`: URL to the REST API application, example: `https://my-gravitee-rest-api.osc-fr1.scalingo.io` (old name: `MANAGEMENT_API_URL`)
 
 **Optional:**
 
