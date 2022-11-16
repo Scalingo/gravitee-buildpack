@@ -40,7 +40,7 @@ must have the right value of the environment variabel `GRAVITEE_MODULE`
 
 ## Description of the modules
 
-### graviteeio-rest-api
+### graviteeio-apim-rest-api
 
 Configuration REST API allowing to manipulate all the resources of Gravitee.
 
@@ -70,10 +70,10 @@ Some environment variables must or can be configured.
 
 Common to all modules:
 
-* `GRAVITEE_MODULE`: "graviteeio-portal-ui", "graviteeio-management-ui","graviteeio-gateway" or "graviteeio-rest-api"
+* `GRAVITEE_MODULE`: "graviteeio-portal-ui", "graviteeio-management-ui","graviteeio-gateway" or "graviteeio-apim-rest-api"
 * `GRAVITEE_VERSION`: (optional) by default `3.8.3`
 
-### graviteeio-rest-api
+### graviteeio-apim-rest-api
 
 **Required:**
 
