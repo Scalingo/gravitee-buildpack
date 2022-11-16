@@ -1,7 +1,7 @@
 #!/bin/bash
 
-echo "-----> Configuring gravitee gateway"
+echo "-----> Configuring gravitee APIM gateway"
 "${HOME}/scripts/config.rb"
 
-echo "-----> Starting gravitee gateway"
-exec bash "${HOME}/graviteeio-gateway/bin/gravitee"
+echo "-----> Starting gravitee APIM gateway"
+exec bash "${HOME}/graviteeio-apim-gateway/bin/gravitee"

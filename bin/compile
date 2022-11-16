@@ -21,7 +21,7 @@ GRAVITEE_MODULE=${GRAVITEE_MODULE:-}
 
 PORTAL="graviteeio-apim-portal-ui"
 ADMIN="graviteeio-apim-console-ui"
-GATEWAY="graviteeio-gateway"
+GATEWAY="graviteeio-apim-gateway"
 API="graviteeio-apim-rest-api"
 MODULES=(" ${PORTAL} ${ADMIN} ${GATEWAY} ${API} ")
 if [[ -z "$GRAVITEE_MODULE" ]]; then
@@ -77,7 +77,7 @@ if [ "$GRAVITEE_MODULE" = "graviteeio-apim-rest-api" ] ; then
   gem install  --user-install 'bcrypt'
 fi
 
-if [ "$GRAVITEE_MODULE" = "graviteeio-apim-rest-api" -o "$GRAVITEE_MODULE" = "graviteeio-gateway" ] ; then
+if [ "$GRAVITEE_MODULE" = "graviteeio-apim-rest-api" -o "$GRAVITEE_MODULE" = "graviteeio-apim-gateway" ] ; then
   echo "java.runtime.version=11" > "${BUILD_DIR}/system.properties"
   install_jdk "$BUILD_DIR" "$CACHE_DIR"
 fi

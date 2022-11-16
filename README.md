@@ -46,7 +46,7 @@ Configuration REST API allowing to manipulate all the resources of Gravitee.
 
 This module is a java application, the JDK will be automatically installed just like another java application.
 
-### graviteeio-gateway
+### graviteeio-apim-gateway
 
 Entrypoint of all applications and APIs configured in Gravitee.
 
@@ -70,7 +70,7 @@ Some environment variables must or can be configured.
 
 Common to all modules:
 
-* `GRAVITEE_MODULE`: "graviteeio-apim-portal-ui", "graviteeio-apim-console-ui","graviteeio-gateway" or "graviteeio-apim-rest-api"
+* `GRAVITEE_MODULE`: "graviteeio-apim-portal-ui", "graviteeio-apim-console-ui","graviteeio-apim-gateway" or "graviteeio-apim-rest-api"
 * `GRAVITEE_VERSION`: (optional) by default `3.8.3`
 
 ### graviteeio-apim-rest-api
