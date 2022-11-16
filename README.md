@@ -40,19 +40,19 @@ must have the right value of the environment variabel `GRAVITEE_MODULE`
 
 ## Description of the modules
 
-### graviteeio-rest-api
+### graviteeio-apim-rest-api
 
 Configuration REST API allowing to manipulate all the resources of Gravitee.
 
 This module is a java application, the JDK will be automatically installed just like another java application.
 
-### graviteeio-gateway
+### graviteeio-apim-gateway
 
 Entrypoint of all applications and APIs configured in Gravitee.
 
 This module is a java application, the JDK will be automatically installed just like another java application.
 
-### graviteeio-portal-ui
+### graviteeio-apim-portal-ui
 
 Developer Dashboard allowing developers to configure their access to the APIs/Applications deployed through Gravitee.
 
@@ -70,10 +70,10 @@ Some environment variables must or can be configured.
 
 Common to all modules:
 
-* `GRAVITEE_MODULE`: "graviteeio-portal-ui", "graviteeio-management-ui","graviteeio-gateway" or "graviteeio-rest-api"
+* `GRAVITEE_MODULE`: "graviteeio-apim-portal-ui", "graviteeio-apim-console-ui","graviteeio-apim-gateway" or "graviteeio-apim-rest-api"
 * `GRAVITEE_VERSION`: (optional) by default `3.8.3`
 
-### graviteeio-rest-api
+### graviteeio-apim-rest-api
 
 **Required:**
 
@@ -102,7 +102,7 @@ Common to all modules:
 
 * `JVM_COMMON_BUILDPACK`: (optional) by default `https://buildpacks-repository.s3.eu-central-1.amazonaws.com/jvm-common.tar.xz`
 
-### graviteeio-portal-ui
+### graviteeio-apim-portal-ui
 
 **Required:**
 
