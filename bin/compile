@@ -22,7 +22,7 @@ GRAVITEE_MODULE=${GRAVITEE_MODULE:-}
 PORTAL="graviteeio-portal-ui"
 ADMIN="graviteeio-management-ui"
 GATEWAY="graviteeio-gateway"
-API="graviteeio-rest-api"
+API="graviteeio-apim-rest-api"
 MODULES=(" ${PORTAL} ${ADMIN} ${GATEWAY} ${API} ")
 if [[ -z "$GRAVITEE_MODULE" ]]; then
   error "Please choose the Gravitee module to deploy with the env var GRAVITEE_MODULE… (Choose among ${MODULES})"
