@@ -30,7 +30,7 @@ if [[ -z "$GRAVITEE_MODULE" ]]; then
 fi
 
 if [[ ! " ${MODULES[*]} " =~ " ${GRAVITEE_MODULE} " ]]; then
-  error "Veuillez saisir un des moduled Gravitee ${MODULES}"
+  error "Veuillez saisir un des modules Gravitee ${MODULES}"
   exit 1
 fi
 
