@@ -52,7 +52,7 @@ Entrypoint of all applications and APIs configured in Gravitee.
 
 This module is a java application, the JDK will be automatically installed just like another java application.
 
-### graviteeio-portal-ui
+### graviteeio-apim-portal-ui
 
 Developer Dashboard allowing developers to configure their access to the APIs/Applications deployed through Gravitee.
 
@@ -70,7 +70,7 @@ Some environment variables must or can be configured.
 
 Common to all modules:
 
-* `GRAVITEE_MODULE`: "graviteeio-portal-ui", "graviteeio-management-ui","graviteeio-gateway" or "graviteeio-apim-rest-api"
+* `GRAVITEE_MODULE`: "graviteeio-apim-portal-ui", "graviteeio-apim-console-ui","graviteeio-gateway" or "graviteeio-apim-rest-api"
 * `GRAVITEE_VERSION`: (optional) by default `3.8.3`
 
 ### graviteeio-apim-rest-api
@@ -103,7 +103,7 @@ Common to all modules:
 * `JVM_COMMON_BUILDPACK`: (optional) by default `https://buildpacks-repository.s3.eu-central-1.amazonaws.com/jvm-common.tar.xz`
 * `GRAVITEE_HEARTBEAT_ENABLED`: (optional) by default `false`, configure wether or not the gateway should report its status to the REST API
 
-### graviteeio-portal-ui
+### graviteeio-apim-portal-ui
 
 **Required:**
 
