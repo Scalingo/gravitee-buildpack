@@ -2,6 +2,8 @@ index index.html;
 
 root <%= File.join ENV["HOME"], ENV["GRAVITEE_MODULE"] %>;
 
+add_header Content-Security-Policy "frame-ancestors <%= ENV["ALLOWED_FRAME_ANCESTOR_URLS"] %> 'self';" always;
+
 location / {
     try_files $uri $uri/ /index.html;
 }
