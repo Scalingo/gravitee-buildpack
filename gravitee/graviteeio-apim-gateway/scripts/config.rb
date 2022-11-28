@@ -33,3 +33,10 @@ end
 logback_config = "#{config_dir}/logback.xml"
 logback_config_install = "#{install_dir}/config/logback.xml"
 FileUtils.cp logback_config, logback_config_install
+
+elastic_search_ilm_policies = Dir.glob("#{config_dir}/elasticsearch_ilm_policies/*.json")
+elastic_search_ilm_policies.each do |policy_path|
+  policy_name = File.basename(policy_path, ".json")
+  puts "Uploading ILM policy to ElasticSearch #{policy_name}"
+  system("curl --request PUT #{ENV["ELASTICSEARCH_URL"]}/_ilm/policy/#{policy_name} --header 'Content-Type: application/json' --data @#{policy_path}")
+end
