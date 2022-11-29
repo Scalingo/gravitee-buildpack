@@ -3,6 +3,7 @@
 require 'uri'
 require 'erb'
 require 'fileutils'
+require 'net/http'
 
 install_dir="#{ENV["HOME"]}/#{ENV["GRAVITEE_MODULE"]}"
 config_dir="#{ENV["HOME"]}/config"
@@ -34,9 +35,26 @@ logback_config = "#{config_dir}/logback.xml"
 logback_config_install = "#{install_dir}/config/logback.xml"
 FileUtils.cp logback_config, logback_config_install
 
+def es_put(uri, body, &block)
+  Net::HTTP.start(uri.host, uri.port) do |http|
+    request = Net::HTTP::Put.new(uri)
+    request.basic_auth uri.user, uri.password
+    request['Content-Type'] = 'application/json'
+    http.request(request, body, &block)
+  end
+end
+
 elastic_search_ilm_policies = Dir.glob("#{config_dir}/elasticsearch_ilm_policies/*.json")
 elastic_search_ilm_policies.each do |policy_path|
   policy_name = File.basename(policy_path, ".json")
   puts "Uploading ILM policy to ElasticSearch #{policy_name}"
-  system("curl --request PUT #{ENV["ELASTICSEARCH_URL"]}/_ilm/policy/#{policy_name} --header 'Content-Type: application/json' --data @#{policy_path}")
+  uri = URI("#{ENV["ELASTICSEARCH_URL"]}/_ilm/policy/#{policy_name}")
+  es_put(uri, File.read(policy_path)) do |response|
+    if response.code == "200"
+      puts "Policy #{policy_name} updated"
+    else
+      puts "Policy #{policy_name} error #{response.code} #{response.body}"
+      exit 1
+    end
+  end
 end
