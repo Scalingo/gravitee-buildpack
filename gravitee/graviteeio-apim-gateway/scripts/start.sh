@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 echo "-----> Configuring gravitee APIM gateway"
 "${HOME}/scripts/config.rb"
 

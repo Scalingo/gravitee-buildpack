@@ -54,6 +54,7 @@ elastic_search_ilm_policies.each do |policy_path|
       puts "Policy #{policy_name} updated"
     else
       puts "Policy #{policy_name} error #{response.code} #{response.body}"
+      exit 1
     end
   end
 end
