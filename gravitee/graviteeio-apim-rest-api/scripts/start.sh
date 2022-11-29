@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 echo "-----> Configuring gravitee APIM REST API"
 "${HOME}/scripts/config.rb"
 
