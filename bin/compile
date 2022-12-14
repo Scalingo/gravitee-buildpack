@@ -44,6 +44,8 @@ status "Downloading Graviteeio ${GRAVITEE_VERSION} from ${GRAVITEE_URL} to ${GRA
 if [ -f "$GRAVITEE_ZIP" ] ; then
   info "Graviteeio archive fetched from the deployment cache"
 else
+  # Cleanup the cache to not fill it with previous gravitee versions
+  rm -rf "$GRAVITEE_DOWNLOADS/*"
   curl -s --retry 3 -o "$GRAVITEE_ZIP" -L "$GRAVITEE_URL"
 fi
 info "done"
