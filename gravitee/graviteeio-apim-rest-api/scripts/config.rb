@@ -19,7 +19,11 @@ if ENV["MONGO_URL"].nil?
 end
 
 @elasticsearch_url = URI(ENV["ELASTICSEARCH_URL"])
-@mongo_url = ENV["MONGO_URL"]
+
+@jdbc_url = ENV["JDBC_URL"]
+@jdbc_username = ENV["JDBC_USERNAME"]
+@jdbc_password = ENV["JDBC_PASSWORD"]
+
 @admin_password = BCrypt::Password.create(ENV["GRAVITEE_ADMIN_PASSWORD"])
 
 # Optional configuration to send emails
